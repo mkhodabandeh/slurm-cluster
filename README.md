@@ -24,9 +24,9 @@ sudo apt-get install dnsmasq
 
 2.3. Configure dnsmasq add these lines to /etc/dnsmasq.conf
 ```
-interface=eth0
+interface=eth0 # change this depending on your machine
 bind-interfaces
-dhcp-range=192.168.99.10,192.168.99.254
+dhcp-range=192.168.99.10,192.168.99.254  # change this depending on your network or VLAN
 dhcp-boot=grubnetx64.efi.signed
 enable-tftp
 tftp-root=/srv/tftp/

@@ -41,3 +41,17 @@ systemctl restart dnsmasq.service
 ```
 systemctl status dnsmasq.service
 ```
+
+### 3. Create boot files (+ autoinstall)
+
+Use this unofficial script to create the boot: (https://github.com/dannf/ubuntu-server-netboot)[https://github.com/dannf/ubuntu-server-netboot]
+
+1. Create the autoinstall config file
+
+#TODO
+
+2. Create the boot file
+
+3. Copy the content to `/srv/tftp/`
+
+### Boot the compute nodes (Ubuntu will be automatically installed on them)

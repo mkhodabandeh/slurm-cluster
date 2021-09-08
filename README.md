@@ -44,11 +44,55 @@ systemctl status dnsmasq.service
 
 ### 3. Create boot files (+ autoinstall)
 
+1. Install the following packages:
+```bash
+sudo apt install pxelinux syslinux-efi syslinux-common
+```
+
 Use this unofficial script to create the boot: (https://github.com/dannf/ubuntu-server-netboot)[https://github.com/dannf/ubuntu-server-netboot]
 
-1. Create the autoinstall config file
+2. Create the autoinstall config file
 
-#TODO
+```yaml
+autoinstall:
+  version: 1
+  # use interactive-sections to avoid an automatic reboot
+  #interactive-sections:
+  #  - locale
+  apt:
+    # even set to no/false, geoip lookup still happens
+    #geoip: no
+    preserve_sources_list: false
+    primary:
+    - arches: amd64
+      uri: http://us.archive.ubuntu.com/ubuntu
+    - arches: [default]
+      uri: http://ports.ubuntu.com/ubuntu-ports
+  # r00tme
+  identity: 
+    hostname: node 
+    username: varadmin
+    password: $PASSWARD 
+  keyboard: 
+    layout: us 
+    variant: ''
+  locale: en_US.UTF-8
+  # interface name will probably be different
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  late-commands:
+    - curtin in-target --target=/target -- apt update           
+    - curtin in-target --target=/target -- apt upgrade -y
+
+```
+
+2.1 Use the following command to hash the desired password
+```bash
+sudo apt install whois
+mkpasswd -m sha-512
+```
 
 2. Create the boot file
 
